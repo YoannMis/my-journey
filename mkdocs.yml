@@ -25,7 +25,8 @@ theme:
 
 plugins:
   - search
-  - blog
+  - blog:
+      pagination_per_page: 4
 
 markdown_extensions:
   - pymdownx.highlight:
