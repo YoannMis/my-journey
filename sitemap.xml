@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://mydomain.org/mysite/</loc>
+         <lastmod>2025-10-19</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/blog/</loc>
+         <lastmod>2025-10-19</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/blog/2025/10/13/-saison-a-semaine-5-%C3%A9pisode-1---le-dom/</loc>
+         <lastmod>2025-10-19</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/blog/2025/10/14/-saison-a-semaine-5-%C3%A9pisode-2---les-%C3%A9v%C3%A8nements/</loc>
+         <lastmod>2025-10-19</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/blog/2025/10/15/-saison-a-semaine-5-%C3%A9pisode-3---une-journ%C3%A9e-en-pair-programming/</loc>
+         <lastmod>2025-10-19</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/blog/archive/2025/</loc>
+         <lastmod>2025-10-19</lastmod>
+    </url>
+</urlset>
