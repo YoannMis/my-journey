@@ -72,6 +72,6 @@ Alors, suivez-moi dans cette aventure, et voyons ensemble où ce nouveau chemin 
 
 ---
 
-> *"Le code, c’est comme la science : ça demande de la patience, de la persévérance, et une bonne dose de café. Mais quand ça marche, c’est magique."* 🔬🧑‍💻💡  
+> *"Le code, c’est comme la science : ça demande de la patience, de la persévérance, et une bonne dose de café. Mais quand ça marche, c’est magique." 🔬🧑‍💻💡 - Mistral AI*  
 > *"Do or do not. There is no try." - Yoda*  
 > *"The greatest teacher failure is." - Yoda*
