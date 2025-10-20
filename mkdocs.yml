@@ -28,6 +28,7 @@ plugins:
   - search
   - blog:
       pagination_per_page: 4
+      blog_toc: true
 
 markdown_extensions:
   - pymdownx.highlight:
