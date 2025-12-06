@@ -4,6 +4,8 @@ site_url: https://mydomain.org/mysite
 
 theme:
   name: material
+  font:
+    text: Roboto
   icon:
     admonition:
       note: octicons/tag-16
@@ -23,6 +25,24 @@ theme:
     - content.code.select
     - content.code.annotate
     - navigation.indexes
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: green
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
 plugins:
   - search
@@ -46,3 +66,6 @@ nav:
   - Home: index.md
   - Blog:
       - blog/index.md
+
+extra_css:
+  - stylesheets/extra.css

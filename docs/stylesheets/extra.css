@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Hack";
+  src: "<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css'>";
+}
+
+:root {
+  --md-code-font: "Hack";
+}
