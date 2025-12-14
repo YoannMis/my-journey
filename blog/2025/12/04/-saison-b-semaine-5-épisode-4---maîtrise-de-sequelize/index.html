@@ -1,0 +1,1380 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="My journey to web development">
+      
+      
+      
+        <link rel="canonical" href="https://mydomain.org/mysite/blog/2025/12/04/-saison-b-semaine-5-%C3%A9pisode-4---ma%C3%AEtrise-de-sequelize/">
+      
+      
+        <link rel="prev" href="../../03/-saison-b-semaine-5-%C3%A9pisode-3---introduction-aux-orm/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>📅 SAISON B Semaine 5 Épisode 4 - Maîtrise de Sequelize - My Journey</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#saison-b-semaine-5-episode-4-maitrise-de-sequelize" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="My Journey" class="md-header__button md-logo" aria-label="My Journey" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Journey
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              📅 SAISON B Semaine 5 Épisode 4 - Maîtrise de Sequelize
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="My Journey" class="md-nav__button md-logo" aria-label="My Journey" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Journey
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#notions-du-jour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 Notions du jour
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 Notions du jour">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition-des-modeles-avec-sequelizedefine-et-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 Définition des Modèles avec sequelize.define() et DataTypes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#associations-entre-modeles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Associations entre Modèles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 Associations entre Modèles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#centralisation-des-modeles-et-definition-des-associations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Centralisation des Modèles et Définition des Associations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#points-cles-sur-les-associations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Points Clés sur les Associations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronisation-du-schema-avec-sequelizesync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 Synchronisation du Schéma avec sequelize.sync()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Synchronisation du Schéma avec sequelize.sync()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemple-synchroniser-tous-les-modeles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple : Synchroniser Tous les Modèles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peuplement-de-la-base-de-donnees-seeding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌱 Peuplement de la Base de Données (Seeding)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌱 Peuplement de la Base de Données (Seeding)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-script-de-seeding-complet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ Script de Seeding Complet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-explications-detailees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ Explications Détailées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-structure-du-fichier-json-ocoffee-datasetjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ Structure du Fichier JSON (ocoffee-dataset.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-points-cles-du-seeding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4️⃣ Points Clés du Seeding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remplacement-de-la-couche-dacces-manuelle-par-sequelize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 Remplacement de la Couche d’Accès Manuelle par Sequelize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-jai-appris-aujourdhui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Ce Que J’ai Appris Aujourd’hui
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenge-du-jour-projet-ocoffee-projet-fil-rouge-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⌨️ Challenge du jour : "Projet oCoffee" – projet fil rouge (suite)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⌨️ Challenge du jour : &#34;Projet oCoffee&#34; – projet fil rouge (suite)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#presentation-du-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ☕️ Présentation du Challenge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapes-a-realiser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 Étapes à Réaliser
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📌 Étapes à Réaliser">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-supprimer-lancien-datamapper-et-les-modeles-manuels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ Supprimer l’Ancien Datamapper et les Modèles Manuels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-importer-les-modeles-sequelize-dans-productcontrollerjs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ Importer les Modèles Sequelize dans ProductController.js
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-reecrire-la-methode-renderhomepage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ Réécrire la Méthode renderHomePage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-reecrire-la-methode-rendercatalogpage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4️⃣ Réécrire la Méthode renderCatalogPage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reecrire-la-methode-rendercoffeedetailspage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5️⃣ Réécrire la Méthode renderCoffeeDetailsPage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-jai-appris-avec-ce-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Ce Que J’ai Appris avec ce Challenge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-12-04 00:00:00+00:00" class="md-ellipsis">December 4, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              9 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+
+<h1 id="saison-b-semaine-5-episode-4-maitrise-de-sequelize"><strong>📅 SAISON B Semaine 5 Épisode 4 - Maîtrise de Sequelize</strong></h1>
+<h2 id="notions-du-jour"><strong>📚 Notions du jour</strong></h2>
+<p>Aujourd’hui, nous avons approfondi notre utilisation de <strong>Sequelize</strong>, l’ORM (Object-Relational Mapping) pour Node.js, en explorant des concepts <strong>clés</strong> pour construire une application robuste. Après avoir configuré Sequelize et testé la connexion à la base de données, nous passons maintenant à la <strong>définition des modèles</strong>, la <strong>gestion des associations</strong>, et l’<strong>implémentation complète du CRUD</strong> (Create, Read, Update, Delete).</p>
+<p>Dans cet article, nous allons couvrir :</p>
+<ul>
+<li><strong>La définition des modèles</strong> avec <code>sequelize.define()</code> et les <code>DataTypes</code>.</li>
+<li><strong>La synchronisation du schéma</strong> avec <code>sequelize.sync()</code>.</li>
+<li><strong>Les associations entre modèles</strong> (<code>belongsTo</code>, <code>hasMany</code>, <code>belongsToMany</code>).</li>
+<li><strong>Le chargement des données associées</strong> avec l’option <code>include</code>.</li>
+<li><strong>Le peuplement de la base de données</strong> (seeding).</li>
+<li><strong>Le remplacement de notre couche d’accès manuelle</strong> par les méthodes de Sequelize.</li>
+</ul>
+<!-- more -->
+
+<hr />
+<h3 id="definition-des-modeles-avec-sequelizedefine-et-datatypes"><strong>📚 Définition des Modèles avec <code>sequelize.define()</code> et <code>DataTypes</code></strong></h3>
+<p>Un <strong>modèle</strong> dans Sequelize représente une <strong>table</strong> dans la base de données. Chaque modèle est défini avec des <strong>colonnes</strong> (attributs) et des <strong>types de données</strong> (<code>DataTypes</code>).</p>
+<p>Pour rappel nous avons déjà défini notre <em>Model</em> <code>Coffee</code> en cours hier ainsi que le <em>Model</em> <code>Country</code> lors du challenge (voir <a href="../../03/-saison-b-semaine-5-%C3%A9pisode-3---introduction-aux-orm/">📅 SAISON B Semaine 5 Épisode 3 - Introduction aux ORM</a>).</p>
+<p>Sur la même base nous avons défini un dernier <em>Model</em> <code>Category</code>.</p>
+<h3 id="associations-entre-modeles"><strong>🔗 Associations entre Modèles</strong></h3>
+<p>Pour <strong>centraliser et organiser</strong> les relations entre nos modèles, nous créons un fichier <code>index.js</code> dans le dossier <code>src/models/</code>. Ce fichier importe tous les modèles et définit leurs <strong>associations</strong>.</p>
+<hr />
+<h4 id="centralisation-des-modeles-et-definition-des-associations"><strong>Centralisation des Modèles et Définition des Associations</strong></h4>
+<p><strong>Exemple : Fichier <code>src/models/index.js</code></strong></p>
+<div class="language-javascript highlight"><span class="filename">src/models/index.js</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Import all models</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="nx">Country</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./Country.js&quot;</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">import</span><span class="w"> </span><span class="nx">Category</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./Category.js&quot;</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">import</span><span class="w"> </span><span class="nx">Coffee</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./Coffee.js&quot;</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">// One-to-Many / Many-to-One Relationship</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">// A country has many coffees</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nx">Country</span><span class="p">.</span><span class="nx">hasMany</span><span class="p">(</span><span class="nx">Coffee</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nx">foreignKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;country_id&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Foreign key in the Coffee table</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="kr">as</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coffees&#39;</span><span class="w">             </span><span class="c1">// Alias for inclusion (join)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">});</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">// A coffee belongs to one country</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nx">Coffee</span><span class="p">.</span><span class="nx">belongsTo</span><span class="p">(</span><span class="nx">Country</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nx">foreignKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;country_id&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Foreign key in the Coffee table</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="kr">as</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;country&#39;</span><span class="w">             </span><span class="c1">// Alias for inclusion (join)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">});</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">// Many-to-Many Relationship</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">// A coffee can have multiple categories</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nx">Coffee</span><span class="p">.</span><span class="nx">belongsToMany</span><span class="p">(</span><span class="nx">Category</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="nx">through</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coffee_category&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Junction table name</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="c1">// Be careful not to reverse foreignKey and otherKey.</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">  </span><span class="c1">// foreignKey must be different from the called model!</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span><span class="nx">foreignKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coffee_id&#39;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Foreign key in the junction table (points to Coffee)</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="nx">otherKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span><span class="w">   </span><span class="c1">// Other key in the junction table (points to Category)</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="kr">as</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;categories&#39;</span><span class="w">           </span><span class="c1">// Alias for inclusion (join)</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">});</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="c1">// A category can have multiple coffees</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="nx">Category</span><span class="p">.</span><span class="nx">belongsToMany</span><span class="p">(</span><span class="nx">Coffee</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="nx">through</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coffee_category&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Junction table name</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="c1">// Be careful not to reverse foreignKey and otherKey.</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">  </span><span class="c1">// foreignKey must be different from the called model!</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">  </span><span class="nx">foreignKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Foreign key in the junction table (points to Category)</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">  </span><span class="nx">otherKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coffee_id&#39;</span><span class="p">,</span><span class="w">     </span><span class="c1">// Other key in the junction table (points to Coffee)</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">  </span><span class="kr">as</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coffees&#39;</span><span class="w">              </span><span class="c1">// Alias for inclusion (join)</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="p">});</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="c1">// Export all models</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="k">export</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Country</span><span class="p">,</span><span class="w"> </span><span class="nx">Category</span><span class="p">,</span><span class="w"> </span><span class="nx">Coffee</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+<p><strong>Explications :</strong></p>
+<ul>
+<li><strong><code>hasMany</code> et <code>belongsTo</code></strong> : Définissent une relation <strong>1:N</strong> (un pays a plusieurs cafés, un café appartient à un pays).</li>
+<li><strong><code>foreignKey</code></strong> : Spécifie la clé étrangère dans la table liée.</li>
+<li><strong><code>as</code></strong> : Définit un alias pour les requêtes avec <code>include</code>.</li>
+<li><strong><code>belongsToMany</code></strong> : Définit une relation <strong>N:N</strong> (un café peut avoir plusieurs catégories, une catégorie peut être associée à plusieurs cafés).</li>
+<li><strong><code>through</code></strong> : Spécifie le nom de la <strong>table de liaison</strong> (<code>coffee_category</code>).</li>
+<li><strong><code>foreignKey</code> et <code>otherKey</code></strong> : Définissent les clés étrangères dans la table de liaison.<ul>
+<li><strong><code>foreignKey</code></strong> : Pointe vers le modèle <strong>appelant</strong> (ex: <code>Coffee</code> pour <code>Coffee.belongsToMany</code>).</li>
+<li><strong><code>otherKey</code></strong> : Pointe vers le modèle <strong>cible</strong> (ex: <code>Category</code> pour <code>Coffee.belongsToMany</code>).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="points-cles-sur-les-associations"><strong>💡 Points Clés sur les Associations</strong></h4>
+<ol>
+<li><strong>Centralisation</strong> : Le fichier <code>index.js</code> regroupe toutes les définitions d’associations, ce qui rend le code <strong>plus organisé et maintenable</strong>.</li>
+<li><strong>Clés Étrangères</strong> : Les relations <strong>1:N</strong> utilisent une clé étrangère dans la table "N" (ex: <code>country_id</code> dans <code>Coffee</code>).</li>
+<li><strong>Tables de Liaison</strong> : Les relations <strong>N:N</strong> nécessitent une <strong>table intermédiaire</strong> (<code>through</code>) avec deux clés étrangères.</li>
+<li><strong>Alias (<code>as</code>)</strong> : Permettent de <strong>nommer clairement les associations</strong> dans les requêtes, ce qui améliore la lisibilité.</li>
+</ol>
+<hr />
+<h3 id="synchronisation-du-schema-avec-sequelizesync"><strong>🔄 Synchronisation du Schéma avec <code>sequelize.sync()</code></strong></h3>
+<p>La synchronisation permet de <strong>créer ou mettre à jour les tables</strong> dans la base de données en fonction des modèles définis.</p>
+<h4 id="exemple-synchroniser-tous-les-modeles"><strong>Exemple : Synchroniser Tous les Modèles</strong></h4>
+<div class="language-javascript highlight"><span class="filename">database/sync.js</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">import</span><span class="w"> </span><span class="nx">sequelize</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./sequelize-client.js&#39;</span><span class="p">;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// IMPORTANT: import all models here</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">,</span><span class="w"> </span><span class="nx">Country</span><span class="p">,</span><span class="w"> </span><span class="nx">Category</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;../src/models/sequelize/index.js&#39;</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">syncDb</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="c1">// The `{ alter: true }` option compares the state of the database with the Sequelize models.</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="c1">// Warning, this is useful in development but dangerous in production</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">sync</span><span class="p">({</span><span class="w"> </span><span class="nx">alter</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Database synchronised OK&#39;</span><span class="p">);</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Database synchronised NOT OK&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">}</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nx">syncDb</span><span class="p">();</span><span class="w"> </span><span class="c1">// Call the function to sync models</span>
+</span></code></pre></div>
+<p><strong>Explications :</strong></p>
+<ul>
+<li><strong><code>sequelize.sync()</code></strong> : Crée les tables si elles n’existent pas.</li>
+<li><strong><code>{ alter: true }</code></strong> : Met à jour la structure des tables si le modèle a changé (attention en production !).</li>
+<li><strong><code>{ force: true }</code></strong> : <strong>Supprime et recrée</strong> les tables (à utiliser avec prudence).</li>
+</ul>
+<hr />
+<h3 id="peuplement-de-la-base-de-donnees-seeding"><strong>🌱 Peuplement de la Base de Données (Seeding)</strong></h3>
+<p>Le <strong>seeding</strong> (ou peuplement) consiste à <strong>remplir la base de données</strong> avec des données initiales, souvent utilisées pour :</p>
+<ul>
+<li><strong>Initialiser un environnement de développement</strong> avec des données réalistes.</li>
+<li><strong>Tester des fonctionnalités</strong> sans avoir à saisir manuellement des données.</li>
+<li><strong>Créer des jeux de données</strong> pour des démonstrations ou des tests automatisés.</li>
+</ul>
+<p>Dans notre projet <strong>oCoffee</strong>, nous utilisons un fichier JSON (<code>ocoffee-dataset.json</code>) contenant des données pour les <strong>pays</strong>, <strong>catégories</strong> et <strong>cafés</strong>. Voici comment nous procédons pour peupler la base de données avec Sequelize.</p>
+<hr />
+<h4 id="1-script-de-seeding-complet"><strong>1️⃣ Script de Seeding Complet</strong></h4>
+<p><strong>Exemple : Fichier <code>seed.js</code></strong></p>
+<div class="language-javascript highlight"><span class="filename">database/seed.js</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Import Sequelize instance and models</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">import</span><span class="w"> </span><span class="nx">sequelize</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./sequelize-client.js&quot;</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Country</span><span class="p">,</span><span class="w"> </span><span class="nx">Category</span><span class="p">,</span><span class="w"> </span><span class="nx">Coffee</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;../src/models/index.js&quot;</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// Import dataset from JSON file</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">import</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;../data/ocoffee-dataset.json&quot;</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;json&quot;</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">// Main seeding function</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">seed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="c1">// Drop all tables and recreate them (force: true)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="c1">// WARNING: This will delete ALL existing data in the database!</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">sync</span><span class="p">({</span><span class="w"> </span><span class="nx">force</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">logging</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span><span class="c1">// Create all countries from the dataset</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">countries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Country</span><span class="p">.</span><span class="nx">bulkCreate</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">countries</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">returning</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span><span class="c1">// Create all categories from the dataset</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">categories</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Category</span><span class="p">.</span><span class="nx">bulkCreate</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">categories</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">returning</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="c1">// Loop through each coffee in the dataset</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">coffeeData</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">coffees</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="c1">// Create a coffee with its associated country</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="c1">// Find the country ID by matching the country name</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">coffee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">      </span><span class="p">...</span><span class="nx">coffeeData</span><span class="p">,</span><span class="w"> </span><span class="c1">// Spread all coffee properties</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">      </span><span class="nx">country_id</span><span class="o">:</span><span class="w"> </span><span class="nx">countries</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">country</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">country</span><span class="p">.</span><span class="nx">dataValues</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">coffeeData</span><span class="p">.</span><span class="nx">country</span><span class="p">).</span><span class="nx">id</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">    </span><span class="p">});</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">    </span><span class="c1">// Find categories associated with the coffee in the dataset</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">categoriesToAdd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">categories</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">category</span><span class="w"> </span><span class="p">=&gt;</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">      </span><span class="nx">coffeeData</span><span class="p">.</span><span class="nx">categories</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">category</span><span class="p">.</span><span class="nx">dataValues</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">    </span><span class="p">);</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">    </span><span class="c1">// Associate categories with the coffee using Sequelize&#39;s magic method `addBar()`</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">coffee</span><span class="p">.</span><span class="nx">addCategories</span><span class="p">(</span><span class="nx">categoriesToAdd</span><span class="p">);</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="w">    </span><span class="c1">// Load the country association (optional, for verification)</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">coffee</span><span class="p">.</span><span class="nx">getCountry</span><span class="p">();</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="w">  </span><span class="c1">// Close the database connection</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Database seeding completed successfully!&quot;</span><span class="p">);</span>
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="p">}</span>
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>
+</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a><span class="c1">// Execute the seeding function</span>
+</span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a><span class="nx">seed</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-47"><a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error during seeding:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+</span><span id="__span-2-48"><a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a><span class="p">});</span>
+</span></code></pre></div>
+<hr />
+<h4 id="2-explications-detailees"><strong>2️⃣ Explications Détailées</strong></h4>
+<ol>
+<li><strong><code>sequelize.sync({ force: true, logging: false })</code></strong></li>
+<li><strong><code>force: true</code></strong> : Supprime et recrée <strong>toutes les tables</strong> de la base de données.</li>
+<li>
+<p><strong><code>logging: false</code></strong> : Désactive les logs SQL pour éviter la pollution de la console.</p>
+</li>
+<li>
+<p><strong><code>Country.bulkCreate(data.countries, { returning: true })</code></strong></p>
+</li>
+<li><strong><code>bulkCreate</code></strong> : Crée plusieurs enregistrements en une seule requête (optimisé pour les performances).</li>
+<li>
+<p><strong><code>returning: true</code></strong> : Retourne les instances créées (utile pour récupérer les IDs générés).</p>
+</li>
+<li>
+<p><strong>Création des Cafés avec leurs Pays Associés</strong></p>
+</li>
+</ol>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">coffee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p">...</span><span class="nx">coffeeData</span><span class="p">,</span><span class="w"> </span><span class="c1">// Copy all properties from the dataset</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nx">country_id</span><span class="o">:</span><span class="w"> </span><span class="nx">countries</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">country</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">country</span><span class="p">.</span><span class="nx">dataValues</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">coffeeData</span><span class="p">.</span><span class="nx">country</span><span class="p">).</span><span class="nx">id</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">});</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>...coffeeData</code></strong> : Copie toutes les propriétés du café depuis le JSON.</li>
+<li>
+<p><strong><code>country_id</code></strong> : Trouve l’ID du pays correspondant au nom dans le dataset.</p>
+</li>
+<li>
+<p><strong>Association des Catégories aux Cafés</strong></p>
+</li>
+</ul>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">categoriesToAdd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">categories</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">category</span><span class="w"> </span><span class="p">=&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nx">coffeeData</span><span class="p">.</span><span class="nx">categories</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">category</span><span class="p">.</span><span class="nx">dataValues</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">);</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">await</span><span class="w"> </span><span class="nx">coffee</span><span class="p">.</span><span class="nx">addCategories</span><span class="p">(</span><span class="nx">categoriesToAdd</span><span class="p">);</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>categories.filter(...)</code></strong> : Filtre les catégories pour ne garder que celles associées au café.</li>
+<li>
+<p><strong><code>coffee.addCategories(...)</code></strong> : Méthode magique de Sequelize pour créer des associations N:N.</p>
+</li>
+<li>
+<p><strong>Chargement des Associations (Optionnel)</strong></p>
+</li>
+</ul>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">await</span><span class="w"> </span><span class="nx">coffee</span><span class="p">.</span><span class="nx">getCountry</span><span class="p">();</span><span class="w"> </span><span class="c1">// Load the associated country</span>
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong><code>getCountry()</code></strong> : Charge le pays associé pour vérification (optionnel).</p>
+</li>
+<li>
+<p><strong>Fermeture de la Connexion</strong></p>
+</li>
+</ul>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">await</span><span class="w"> </span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>sequelize.close()</code></strong> : Ferme proprement la connexion à la base de données après le seeding.</li>
+</ul>
+<hr />
+<h4 id="3-structure-du-fichier-json-ocoffee-datasetjson"><strong>3️⃣ Structure du Fichier JSON (<code>ocoffee-dataset.json</code>)</strong></h4>
+<p>Le fichier JSON contient les données initiales pour les <strong>pays</strong>, <strong>catégories</strong> et <strong>cafés</strong>. Voici un exemple de structure :</p>
+<div class="language-json highlight"><span class="filename">data/ocoffee-dataset.json</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;countries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Colombia&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brazil&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ethiopia&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bio&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fair Trade&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Organic&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="nt">&quot;coffees&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Colombian Supreme&quot;</span><span class="p">,</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">      </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">8.99</span><span class="p">,</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A rich and balanced coffee from Colombia.&quot;</span><span class="p">,</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">      </span><span class="nt">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Colombia&quot;</span><span class="p">,</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">      </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Bio&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Fair Trade&quot;</span><span class="p">]</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brazilian Santos&quot;</span><span class="p">,</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">      </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">7.99</span><span class="p">,</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A smooth and nutty coffee from Brazil.&quot;</span><span class="p">,</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">      </span><span class="nt">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brazil&quot;</span><span class="p">,</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">      </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Organic&quot;</span><span class="p">]</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h4 id="4-points-cles-du-seeding"><strong>4️⃣ Points Clés du Seeding</strong></h4>
+<ol>
+<li><strong>Efficacité</strong> : <code>bulkCreate</code> est bien plus rapide que de créer les enregistrements un par un.</li>
+<li><strong>Associations</strong> : Sequelize fournit des méthodes magiques comme <code>addCategories</code> pour gérer les relations N:N.</li>
+<li><strong>Flexibilité</strong> : Le seeding peut être adapté pour <strong>importer des données depuis un fichier</strong>, une API, ou même générées aléatoirement.</li>
+<li><strong>Prudence</strong> : <strong><code>force: true</code> supprime toutes les données existantes</strong> – à utiliser uniquement en développement ou en test !</li>
+</ol>
+<hr />
+<h3 id="remplacement-de-la-couche-dacces-manuelle-par-sequelize"><strong>🔄 Remplacement de la Couche d’Accès Manuelle par Sequelize</strong></h3>
+<p>Avant Sequelize, nous utilisions un <strong>datamapper manuel</strong> pour interagir avec la base de données. Maintenant, nous pouvons <strong>remplacer ces méthodes</strong> par des appels Sequelize. Il ne sera plus nécessaire de taper des requêtes SQL dans notre code.</p>
+<p>Nous allons pratiquer dans le <a href="#challenge-du-jour-projet-ocoffee-projet-fil-rouge-suite">challenge du jour</a> 😊.</p>
+<hr />
+<h3 id="ce-que-jai-appris-aujourdhui"><strong>💡 Ce Que J’ai Appris Aujourd’hui</strong></h3>
+<ol>
+<li><strong>Les modèles Sequelize</strong> permettent de <strong>définir des tables</strong> et leurs colonnes avec des types de données et des validations.</li>
+<li><strong>Les associations</strong> (<code>belongsTo</code>, <code>hasMany</code>, <code>belongsToMany</code>) simplifient la gestion des relations entre tables.</li>
+<li><strong>L’option <code>include</code></strong> permet de charger des données associées en une seule requête (jointure).</li>
+<li><strong>Le seeding</strong> est utile pour <strong>peupler la base de données</strong> avec des données initiales.</li>
+<li><strong>Sequelize remplace avantageusement</strong> les requêtes SQL manuelles, ce qui rend le code <strong>plus lisible et maintenable</strong>.</li>
+</ol>
+<hr />
+<h2 id="challenge-du-jour-projet-ocoffee-projet-fil-rouge-suite"><strong>⌨️ Challenge du jour : "Projet oCoffee" – projet fil rouge (suite)</strong></h2>
+<hr />
+<h3 id="presentation-du-challenge"><strong>☕️ Présentation du Challenge</strong></h3>
+<p>Aujourd’hui, l’objectif était de <strong>finaliser l’intégration de Sequelize</strong> dans notre projet <strong>oCoffee</strong> en <strong>remplaçant complètement</strong> notre ancien système de datamapper manuel. Après avoir défini nos modèles et leurs associations, il était temps de <strong>brancher Sequelize directement dans nos contrôleurs</strong> pour que l’application utilise pleinement les fonctionnalités de l’ORM.</p>
+<p><strong>Pourquoi ?</strong></p>
+<ul>
+<li><strong>Supprimer la duplication de code</strong> : Plus besoin d’écrire des requêtes SQL manuelles.</li>
+<li><strong>Améliorer la maintenabilité</strong> : Le code devient plus lisible et plus facile à modifier.</li>
+<li><strong>Profiter des fonctionnalités de Sequelize</strong> : Jointures, validations, et gestion des associations sans effort.</li>
+</ul>
+<hr />
+<h3 id="etapes-a-realiser"><strong>📌 Étapes à Réaliser</strong></h3>
+<hr />
+<h4 id="1-supprimer-lancien-datamapper-et-les-modeles-manuels"><strong>1️⃣ Supprimer l’Ancien Datamapper et les Modèles Manuels</strong></h4>
+<p>J'ai commencé par supprimer le datamapper et tous les Modèles de class créés dans la première version POO de l'application.</p>
+<hr />
+<h4 id="2-importer-les-modeles-sequelize-dans-productcontrollerjs"><strong>2️⃣ Importer les Modèles Sequelize dans <code>ProductController.js</code></strong></h4>
+<p><strong>Objectif :</strong> Préparer le contrôleur pour utiliser les modèles Sequelize.</p>
+<p><strong>Mon code :</strong></p>
+<div class="language-javascript highlight"><span class="filename">src/controllers/ProductController.js</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">,</span><span class="w"> </span><span class="nx">Category</span><span class="p">,</span><span class="w"> </span><span class="nx">Country</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;../models/index.js&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h4 id="3-reecrire-la-methode-renderhomepage"><strong>3️⃣ Réécrire la Méthode <code>renderHomePage</code></strong></h4>
+<p><strong>Objectif :</strong> Récupérer les <strong>3 derniers cafés</strong> avec Sequelize.</p>
+<p><strong>Mon code :</strong></p>
+<div class="language-javascript highlight"><span class="filename">src/controllers/ProductController.js</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">import</span><span class="w"> </span><span class="nx">CoreController</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./CoreController.js&quot;</span><span class="p">;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Country</span><span class="p">,</span><span class="w"> </span><span class="nx">Category</span><span class="p">,</span><span class="w"> </span><span class="nx">Coffee</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;../models/Index.js&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kd">class</span><span class="w"> </span><span class="nx">ProductController</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">CoreController</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nx">renderHomePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="c1">// Fetch the 3 most recent coffees, ordered by creation date (descending)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">articles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">.</span><span class="nx">findAll</span><span class="p">({</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span><span class="nx">attributes</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;id&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Only select specific columns</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">        </span><span class="nx">order</span><span class="o">:</span><span class="w"> </span><span class="p">[[</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DESC&#39;</span><span class="p">]],</span><span class="w"> </span><span class="c1">// Sort by creation date (newest first)</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="c1">// Limit to 3 results</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">        </span><span class="p">});</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;pages/home&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">articles</span><span class="w"> </span><span class="p">});</span><span class="w"> </span><span class="c1">// Render the home page with articles</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;pages/error&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Render error page on failure</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">  </span><span class="p">};</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="p">}</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ProductController</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>Explications :</strong></p>
+<ul>
+<li><strong><code>findAll()</code></strong> : Méthode Sequelize pour récupérer plusieurs enregistrements.</li>
+<li><strong><code>attributes: ['reference', 'name', 'id']</code></strong> : Sélectionne uniquement les colonnes nécessaires pour optimiser la requête.</li>
+<li><strong><code>order: [['created_at', 'DESC']]</code></strong> : Trie les résultats par date de création (du plus récent au plus ancien).</li>
+<li><strong><code>limit: 3</code></strong> : Limite le nombre de résultats à 3 (pour la page d’accueil).</li>
+</ul>
+<hr />
+<h4 id="4-reecrire-la-methode-rendercatalogpage"><strong>4️⃣ Réécrire la Méthode <code>renderCatalogPage</code></strong></h4>
+<p><strong>Objectif :</strong> Récupérer <strong>tous les cafés</strong> et <strong>toutes les catégories</strong> pour la page catalogue.</p>
+<p><strong>Mon code :</strong></p>
+<div class="language-javascript highlight"><span class="filename">src/controllers/ProductController.js</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// ... Previous code...</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nx">renderCatalogPage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="c1">// Fetch all available coffees, including their associated country</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">articles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">.</span><span class="nx">findAll</span><span class="p">({</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">      </span><span class="nx">include</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Include the associated country</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nx">where</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="nx">available</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// Only fetch available coffees</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="p">});</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="c1">// Fetch all categories for the catalog filters</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">categories</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Category</span><span class="p">.</span><span class="nx">findAll</span><span class="p">();</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="c1">// Render the catalog page with coffees and categories</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;pages/catalog&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">articles</span><span class="p">,</span><span class="w"> </span><span class="nx">categories</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;pages/error&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Render error page on failure</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="p">};</span>
+</span></code></pre></div>
+<p><strong>Explications :</strong></p>
+<ul>
+<li><strong><code>include: ['country']</code></strong> : Charge le pays associé à chaque café (relation 1:N).</li>
+<li><strong><code>where: { available: true }</code></strong> : Filtre pour ne récupérer que les cafés disponibles.</li>
+<li><strong><code>Category.findAll()</code></strong> : Récupère toutes les catégories pour les filtres du catalogue.</li>
+</ul>
+<hr />
+<h4 id="5-reecrire-la-methode-rendercoffeedetailspage"><strong>5️⃣ Réécrire la Méthode <code>renderCoffeeDetailsPage</code></strong></h4>
+<p><strong>Objectif :</strong> Récupérer un <strong>café spécifique</strong> avec ses <strong>données associées</strong> (pays et catégories).</p>
+<p><strong>Mon code :</strong></p>
+<div class="language-javascript highlight"><span class="filename">src/controllers/ProductController.js</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nx">renderCoffeeDetailsPage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="c1">// Parse the coffee ID from the URL parameters</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">articleId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="c1">// Check if the ID is a valid number</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">articleId</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">next</span><span class="p">();</span><span class="w"> </span><span class="c1">// Pass to the next middleware (e.g., 404 handler)</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="c1">// Fetch the coffee by ID, including its country and categories</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">article</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Coffee</span><span class="p">.</span><span class="nx">findByPk</span><span class="p">(</span><span class="nx">articleId</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">      </span><span class="nx">include</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">          </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="nx">Country</span><span class="p">,</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">          </span><span class="kr">as</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;country&#39;</span><span class="p">,</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">          </span><span class="nx">attributes</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="w"> </span><span class="c1">// Only fetch the country name</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">        </span><span class="p">},</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">          </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="nx">Category</span><span class="p">,</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">          </span><span class="kr">as</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;categories&#39;</span><span class="p">,</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">          </span><span class="nx">attributes</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="w"> </span><span class="c1">// Only fetch the category names</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">    </span><span class="p">});</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="c1">// If the coffee doesn&#39;t exist, render a 404 page</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">article</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">render404</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">);</span><span class="w"> </span><span class="c1">// Use inherited method from CoreController</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">    </span><span class="c1">// Render the coffee details page with the article data</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;pages/article&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">article</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;pages/error&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Render error page on failure</span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="p">};</span>
+</span></code></pre></div>
+<p><strong>Explications :</strong></p>
+<ul>
+<li><strong><code>findByPk()</code></strong> : Récupère un café par sa clé primaire (<code>id</code>).</li>
+<li><strong><code>include</code></strong> : Charge les données associées :<ul>
+<li><strong><code>Country</code></strong> : Le pays du café (alias <code>country</code>).</li>
+<li><strong><code>Category</code></strong> : Les catégories du café (alias <code>categories</code>).</li>
+</ul>
+</li>
+<li><strong><code>attributes: ['name']</code></strong> : Ne récupère que le nom du pays et des catégories (optimisation).</li>
+</ul>
+<hr />
+<h3 id="ce-que-jai-appris-avec-ce-challenge"><strong>💡 Ce Que J’ai Appris avec ce Challenge</strong></h3>
+<ol>
+<li><strong>Sequelize simplifie grandement</strong> l’accès aux données en remplaçant les requêtes SQL manuelles par des méthodes JavaScript.</li>
+<li><strong>Les jointures avec <code>include</code></strong> permettent de charger les données associées en une seule requête.</li>
+<li><strong>L’optimisation des requêtes</strong> avec <code>attributes</code> réduit la quantité de données inutiles récupérées.</li>
+<li><strong>La refactorisation progressive</strong> permet de migrer vers un ORM sans casser l’application existante.</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.indexes"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
